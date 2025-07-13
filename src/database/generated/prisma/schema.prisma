@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/database/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model databases {
+  cd_database      Int                @id @default(autoincrement())
+  cd_system        Int
+  cd_environment   Int
+  ds_name          String             @db.VarChar(100)
+  dt_created       DateTime?          @default(now()) @db.Timestamp(0)
+  systems          systems            @relation(fields: [cd_system], references: [cd_system], onDelete: Cascade, onUpdate: NoAction, map: "databases_ibfk_1")
+  environments     environments       @relation(fields: [cd_environment], references: [cd_environment], onDelete: Cascade, onUpdate: NoAction, map: "databases_ibfk_2")
+  execution_status execution_status[]
+
+  @@unique([cd_system, cd_environment, ds_name], map: "unq_db")
+  @@index([cd_environment], map: "cd_environment")
+}
+
+model environments {
+  cd_environment Int         @id @default(autoincrement())
+  ds_name        String      @unique(map: "ds_name") @db.VarChar(50)
+  dt_created     DateTime?   @default(now()) @db.Timestamp(0)
+  databases      databases[]
+}
+
+model execution_status {
+  cd_execution_status Int                        @id @default(autoincrement())
+  cd_execution        Int
+  cd_database         Int
+  ds_status           execution_status_ds_status
+  ds_error_message    String?                    @db.Text
+  dt_executed         DateTime?                  @default(now()) @db.Timestamp(0)
+  executions          executions                 @relation(fields: [cd_execution], references: [cd_execution], onDelete: Cascade, onUpdate: NoAction, map: "execution_status_ibfk_1")
+  databases           databases                  @relation(fields: [cd_database], references: [cd_database], onDelete: Cascade, onUpdate: NoAction, map: "execution_status_ibfk_2")
+
+  @@unique([cd_execution, cd_database], map: "unq_execution_db")
+  @@index([cd_database], map: "cd_database")
+}
+
+model executions {
+  cd_execution     Int                   @id @default(autoincrement())
+  cd_script        Int
+  ds_executed_by   String                @db.VarChar(100)
+  dt_executed      DateTime?             @default(now()) @db.Timestamp(0)
+  ds_status        executions_ds_status? @default(PENDING)
+  ds_notes         String?               @db.Text
+  execution_status execution_status[]
+  scripts          scripts               @relation(fields: [cd_script], references: [cd_script], onDelete: Cascade, onUpdate: NoAction, map: "executions_ibfk_1")
+
+  @@index([cd_script], map: "cd_script")
+}
+
+model scripts {
+  cd_script     Int          @id @default(autoincrement())
+  ds_name       String       @db.VarChar(255)
+  ds_content    String       @db.LongText
+  ds_created_by String       @db.VarChar(100)
+  ds_task       String       @db.VarChar(50)
+  dt_created    DateTime?    @default(now()) @db.Timestamp(0)
+  executions    executions[]
+}
+
+model systems {
+  cd_system  Int         @id @default(autoincrement())
+  ds_name    String      @unique(map: "ds_name") @db.VarChar(100)
+  dt_created DateTime?   @default(now()) @db.Timestamp(0)
+  databases  databases[]
+}
+
+enum execution_status_ds_status {
+  SUCCESS
+  FAILURE
+}
+
+enum executions_ds_status {
+  PENDING
+  SUCCESS
+  FAILURE
+}
