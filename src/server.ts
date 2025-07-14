@@ -4,15 +4,24 @@ import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from "fas
 import { env } from "./env.ts"
 import { prisma } from "./database/prisma.ts"
 import { getDatabaseInfoRoute } from "./http/routes/get-database-info.ts"
+import { createExecutionRoute } from "./http/routes/create-execution.ts"
+import fastifyMultipart from "@fastify/multipart"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 app.register(fastifyCors, {
-    origin: 'http://127.0.0.1:5173'
+    origin: ['http://127.0.0.1:5173', 'http://localhost:5173']
 })
 
 app.setSerializerCompiler(serializerCompiler);
 app.setValidatorCompiler(validatorCompiler);
+
+await app.register(fastifyMultipart, {
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB
+  },
+  attachFieldsToBody: true
+})
 
 app.get("/health", async (_request, reply) => {
     const apiStatus = "up";
@@ -33,5 +42,6 @@ app.get("/health", async (_request, reply) => {
   });
 
 app.register(getDatabaseInfoRoute)
+app.register(createExecutionRoute)
 
 app.listen({port: env.PORT})

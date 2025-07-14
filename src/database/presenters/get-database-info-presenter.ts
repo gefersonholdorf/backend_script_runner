@@ -7,17 +7,17 @@ export type GetDatabaseInfoPresenterSchema = ({
 } & System)[]
 
 export class GetDatabaseInfoPresenter {
-    static toHttp(getDatabasesInfo: GetDatabaseInfoPresenterSchema) {
-        return getDatabasesInfo.map((data) => {
-            return {
-                systemName: data.ds_name,
-                databases: data.databases.map((database) => {
-                    return {
-                        environments: database.environments.ds_name,
-                        databaseName: database.ds_name
-                    }
-                })
-            }
-        })
-    }
+  static toHttp(getDatabasesInfo: GetDatabaseInfoPresenterSchema) {
+    return {
+      systems: getDatabasesInfo.map((system) => ({
+        systemId: system.cd_system,
+        systemName: system.ds_name,
+        databases: system.databases.map((database) => ({
+          databaseId: database.cd_database,
+          databaseName: database.ds_name,
+          environmentName: database.environments.ds_name
+        })),
+      })),
+    };
+  }
 }
