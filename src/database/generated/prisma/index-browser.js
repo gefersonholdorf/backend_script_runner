@@ -205,6 +205,7 @@ exports.Prisma.systemsOrderByRelevanceFieldEnum = {
   ds_name: 'ds_name'
 };
 exports.execution_status_ds_status = exports.$Enums.execution_status_ds_status = {
+  PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
   FAILURE: 'FAILURE'
 };

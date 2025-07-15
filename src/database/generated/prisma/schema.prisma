@@ -33,7 +33,7 @@ model execution_status {
   cd_execution_status Int                        @id @default(autoincrement())
   cd_execution        Int
   cd_database         Int
-  ds_status           execution_status_ds_status
+  ds_status           execution_status_ds_status @default(PENDING)
   ds_error_message    String?                    @db.Text
   dt_executed         DateTime?                  @default(now()) @db.Timestamp(0)
   executions          executions                 @relation(fields: [cd_execution], references: [cd_execution], onDelete: Cascade, onUpdate: NoAction, map: "execution_status_ibfk_1")
@@ -73,12 +73,13 @@ model systems {
   databases  databases[]
 }
 
-enum execution_status_ds_status {
+enum executions_ds_status {
+  PENDING
   SUCCESS
   FAILURE
 }
 
-enum executions_ds_status {
+enum execution_status_ds_status {
   PENDING
   SUCCESS
   FAILURE

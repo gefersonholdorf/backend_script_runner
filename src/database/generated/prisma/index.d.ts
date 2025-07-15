@@ -48,15 +48,7 @@ export type systems = $Result.DefaultSelection<Prisma.$systemsPayload>
  * Enums
  */
 export namespace $Enums {
-  export const execution_status_ds_status: {
-  SUCCESS: 'SUCCESS',
-  FAILURE: 'FAILURE'
-};
-
-export type execution_status_ds_status = (typeof execution_status_ds_status)[keyof typeof execution_status_ds_status]
-
-
-export const executions_ds_status: {
+  export const executions_ds_status: {
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
   FAILURE: 'FAILURE'
@@ -64,15 +56,24 @@ export const executions_ds_status: {
 
 export type executions_ds_status = (typeof executions_ds_status)[keyof typeof executions_ds_status]
 
+
+export const execution_status_ds_status: {
+  PENDING: 'PENDING',
+  SUCCESS: 'SUCCESS',
+  FAILURE: 'FAILURE'
+};
+
+export type execution_status_ds_status = (typeof execution_status_ds_status)[keyof typeof execution_status_ds_status]
+
 }
-
-export type execution_status_ds_status = $Enums.execution_status_ds_status
-
-export const execution_status_ds_status: typeof $Enums.execution_status_ds_status
 
 export type executions_ds_status = $Enums.executions_ds_status
 
 export const executions_ds_status: typeof $Enums.executions_ds_status
+
+export type execution_status_ds_status = $Enums.execution_status_ds_status
+
+export const execution_status_ds_status: typeof $Enums.execution_status_ds_status
 
 /**
  * ##  Prisma Client ʲˢ
@@ -8040,7 +8041,7 @@ export namespace Prisma {
   }
 
   export type execution_statusCreateInput = {
-    ds_status: $Enums.execution_status_ds_status
+    ds_status?: $Enums.execution_status_ds_status
     ds_error_message?: string | null
     dt_executed?: Date | string | null
     executions: executionsCreateNestedOneWithoutExecution_statusInput
@@ -8051,7 +8052,7 @@ export namespace Prisma {
     cd_execution_status?: number
     cd_execution: number
     cd_database: number
-    ds_status: $Enums.execution_status_ds_status
+    ds_status?: $Enums.execution_status_ds_status
     ds_error_message?: string | null
     dt_executed?: Date | string | null
   }
@@ -8077,7 +8078,7 @@ export namespace Prisma {
     cd_execution_status?: number
     cd_execution: number
     cd_database: number
-    ds_status: $Enums.execution_status_ds_status
+    ds_status?: $Enums.execution_status_ds_status
     ds_error_message?: string | null
     dt_executed?: Date | string | null
   }
@@ -9240,7 +9241,7 @@ export namespace Prisma {
   }
 
   export type execution_statusCreateWithoutDatabasesInput = {
-    ds_status: $Enums.execution_status_ds_status
+    ds_status?: $Enums.execution_status_ds_status
     ds_error_message?: string | null
     dt_executed?: Date | string | null
     executions: executionsCreateNestedOneWithoutExecution_statusInput
@@ -9249,7 +9250,7 @@ export namespace Prisma {
   export type execution_statusUncheckedCreateWithoutDatabasesInput = {
     cd_execution_status?: number
     cd_execution: number
-    ds_status: $Enums.execution_status_ds_status
+    ds_status?: $Enums.execution_status_ds_status
     ds_error_message?: string | null
     dt_executed?: Date | string | null
   }
@@ -9485,7 +9486,7 @@ export namespace Prisma {
   }
 
   export type execution_statusCreateWithoutExecutionsInput = {
-    ds_status: $Enums.execution_status_ds_status
+    ds_status?: $Enums.execution_status_ds_status
     ds_error_message?: string | null
     dt_executed?: Date | string | null
     databases: databasesCreateNestedOneWithoutExecution_statusInput
@@ -9494,7 +9495,7 @@ export namespace Prisma {
   export type execution_statusUncheckedCreateWithoutExecutionsInput = {
     cd_execution_status?: number
     cd_database: number
-    ds_status: $Enums.execution_status_ds_status
+    ds_status?: $Enums.execution_status_ds_status
     ds_error_message?: string | null
     dt_executed?: Date | string | null
   }
@@ -9674,7 +9675,7 @@ export namespace Prisma {
   export type execution_statusCreateManyDatabasesInput = {
     cd_execution_status?: number
     cd_execution: number
-    ds_status: $Enums.execution_status_ds_status
+    ds_status?: $Enums.execution_status_ds_status
     ds_error_message?: string | null
     dt_executed?: Date | string | null
   }
@@ -9734,7 +9735,7 @@ export namespace Prisma {
   export type execution_statusCreateManyExecutionsInput = {
     cd_execution_status?: number
     cd_database: number
-    ds_status: $Enums.execution_status_ds_status
+    ds_status?: $Enums.execution_status_ds_status
     ds_error_message?: string | null
     dt_executed?: Date | string | null
   }
