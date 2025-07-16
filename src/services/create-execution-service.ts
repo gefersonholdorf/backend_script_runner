@@ -56,21 +56,23 @@ export class CreateExecutionService {
             databasesExecutionIds = newExecutionStatus
         })
 
-        //Chamada para a automação N8N
-        const n8nExecution = await fetch('https://automacao.lusati.com.br/webhook-test/4fdd99d5-4a3c-438d-85a9-59bf6a9006c7', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                executionId: executionId!,
-                databasesExecutionIds: databasesExecutionIds!
-            })
-        })
+        return executionId!
 
-        await this.monitoringExecution(executionId!)
+        // //Chamada para a automação N8N
+        // const n8nExecution = await fetch('https://automacao.lusati.com.br/webhook-test/4fdd99d5-4a3c-438d-85a9-59bf6a9006c7', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         executionId: executionId!,
+        //         databasesExecutionIds: databasesExecutionIds!
+        //     })
+        // })
 
-        console.log('Execução realizada com sucesso!')
+        // await this.monitoringExecution(executionId!)
+
+        // console.log('Execução realizada com sucesso!')
     }
     
     async createScript({file, createdBy, task, tx}: CreateScriptSchema) {

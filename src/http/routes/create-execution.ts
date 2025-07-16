@@ -21,11 +21,7 @@ export const createExecutionRoute: FastifyPluginCallbackZod = async (app) => {
         const result = await createExecutionService.createExecution(data)
 
         return {
-            createdBy: data.createdBy.value,
-            task: data.task.value,
-            system: data.system.value,
-            ambient: data.ambient.value,
-            filename: data.file.filename,
+            result
         }
     })
 }
