@@ -7,6 +7,7 @@ import { getDatabaseInfoRoute } from "./http/routes/get-database-info.ts"
 import { createExecutionRoute } from "./http/routes/create-execution.ts"
 import fastifyMultipart from "@fastify/multipart"
 import { getExecutionByIdRoute } from "./http/routes/get-execution-by-id.ts"
+import { fetchExecutionsRoute } from "./http/routes/fetch-executions.ts"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -45,5 +46,6 @@ app.get("/health", async (_request, reply) => {
 app.register(getDatabaseInfoRoute)
 app.register(createExecutionRoute)
 app.register(getExecutionByIdRoute)
+app.register(fetchExecutionsRoute)
 
 app.listen({port: env.PORT})

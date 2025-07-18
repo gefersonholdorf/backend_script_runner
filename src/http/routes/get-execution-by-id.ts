@@ -1,6 +1,6 @@
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import z from "zod/v4";
-import { getExecutionService } from "../../services/get-execution-service.ts";
+import { getExecutionService } from "../../services/get-execution-by-id-service.ts";
 
 export const getExecutionByIdRoute: FastifyPluginCallbackZod = (app) => {
     app.get('/executions/:id', {
